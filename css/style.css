@@ -1,0 +1,343 @@
+/* Định nghĩa biến màu sắc cho Light Mode và Dark Mode (CSS Variables) */
+:root {
+    --bg-color: #f4f6f9;
+    --text-color: #333333;
+    --header-bg: #ffffff;
+    --sidebar-bg: #ffffff;
+    --card-bg: #ffffff;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --border-color: #e5e7eb;
+    --modal-bg: rgba(0, 0, 0, 0.6);
+    --modal-content-bg: #ffffff;
+}
+
+body.dark-mode {
+    --bg-color: #111827;
+    --text-color: #f3f4f6;
+    --header-bg: #1f2937;
+    --sidebar-bg: #1f2937;
+    --card-bg: #1f2937;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --primary-color: #6366f1;
+    --primary-hover: #818cf8;
+    --border-color: #374151;
+    --modal-bg: rgba(0, 0, 0, 0.8);
+    --modal-content-bg: #1f2937;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Header */
+.app-header {
+    background-color: var(--header-bg);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.app-header h1 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+#theme-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+#theme-toggle:hover {
+    background-color: var(--border-color);
+}
+
+/* Layout chính: CSS Grid 2 phần (Sidebar + Main Content) */
+.app-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 73px);
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    padding: 1.5rem;
+    border-right: 1px solid var(--border-color);
+}
+
+.search-box {
+    margin-bottom: 1.5rem;
+}
+
+.search-box label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.filter-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+#genre-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.genre-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    user-select: none;
+}
+
+.genre-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+/* Main Content & Movie Grid */
+.main-content {
+    padding: 2rem;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Thẻ Phim (Movie Card) */
+.movie-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.movie-poster-wrap {
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+.movie-poster-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-poster-wrap img {
+    transform: scale(1.05);
+}
+
+.movie-info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex-grow: 1;
+}
+
+.movie-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.movie-meta {
+    font-size: 0.85rem;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+}
+
+.movie-genre-tag {
+    font-size: 0.8rem;
+    background-color: rgba(79, 70, 229, 0.1);
+    color: var(--primary-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    align-self: flex-start;
+    margin-top: 0.3rem;
+}
+
+.no-results {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #888;
+    margin-top: 3rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Modal Chi tiết phim */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-content {
+    background-color: var(--modal-content-bg);
+    border-radius: 16px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0,0,0,0.1);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.modal-body-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.modal-poster {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.modal-details h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal-details p {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.modal-details strong {
+    color: var(--primary-color);
+}
+
+/* Responsive Thiết kế (Responsive Design) */
+@media (max-width: 768px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .modal-body-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .modal-poster {
+        height: 300px;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    .movie-genre-tag {
+        align-self: center;
+    }
+}
